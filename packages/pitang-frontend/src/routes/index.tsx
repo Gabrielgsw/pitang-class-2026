@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import logo from '../assets/pitang-black.jpg';
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -16,6 +17,7 @@ type Product = {
 
 function RouteComponent() {
   
+  const navigate = useNavigate();
   const[productsOnCar,setProductsOnCar] = useState([]);
 
   
@@ -33,19 +35,15 @@ function RouteComponent() {
           </Link>
         </div>
 
-        <ul className=" flex flex-row gap-8 font-medium text-sm tracking-wide uppercase">
-          <li><Link to="/" className="hover:underline underline-offset-4">Home</Link></li>
-          <li><Link to="/about" className="hover:underline underline-offset-4">About</Link></li>
-          <li><Link to="/contact" className="hover:underline underline-offset-4">Contact</Link></li>
-        </ul>
+        
 
         <div className="flex gap-4 items-center">
           <Link to="/login" className="text-sm font-bold uppercase hover:underline underline-offset-4 hidden sm:block">
             Login
           </Link>
-          <Button className="bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black rounded-none transition-all uppercase text-xs font-bold px-6 py-5">
-            Carrinho (0)
-          </Button>
+          <Link to="/register" className="bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black rounded-none transition-all uppercase text-xs font-bold px-4 py-3">
+            Sign Up
+          </Link>
         </div>
       </nav>
       
@@ -56,7 +54,7 @@ function RouteComponent() {
         <p className="text-lg md:text-xl max-w-2xl mb-10 text-gray-300 font-light">
           Os melhores produtos com os melhores preços encontram-se aqui.
         </p>
-        <Button className="bg-white text-black hover:bg-gray-200 border-2 border-white rounded-none px-10 py-6 text-lg font-bold uppercase tracking-widest transition-colors">
+        <Button onClick={() => navigate({ to: '/login' })} className="cursor-pointer bg-white text-black hover:bg-gray-200 border-2 border-white rounded-none px-10 py-6 text-lg font-bold uppercase tracking-widest transition-colors">
           Explorar Produtos
         </Button>
       </header>
