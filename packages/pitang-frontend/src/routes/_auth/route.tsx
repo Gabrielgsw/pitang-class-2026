@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
+import logo from '../../assets/pitang-black.jpg';
 
 export const Route = createFileRoute("/_auth")({
   component: RouteComponent,
@@ -11,10 +12,8 @@ function RouteComponent() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="#" className="flex items-center gap-2 font-medium">
-            <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <GalleryVerticalEnd className="size-4" />
-            </div>
-            Acme Inc.
+            <img src={logo} className="w-12 h-12" alt="Pitang Logo" />
+            Pitang Commerce
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">

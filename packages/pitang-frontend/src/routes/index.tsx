@@ -1,26 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import logo from '../assets/pitang-black.jpg';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
-
+import type { Product } from "@/types";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
-type Product = {
-  id: number,
-  name: string,
-  price: number,
-  description: string
-}
+
 
 function RouteComponent() {
   
-  const navigate = useNavigate();
-  const[productsOnCar,setProductsOnCar] = useState([]);
-
+  const navigate = useNavigate();  
+  const [products, setProducts] = useState<Product[]>([]);   
   
+  useEffect(() => {
+  async function loadProducts() {
+    const [acessorie, phone, laptop1,laptop2] = await Promise.all([
+      fetch('https://dummyjson.com/products/99').then(res => res.json()),
+      fetch('https://dummyjson.com/products/121').then(res => res.json()),      
+      fetch('https://dummyjson.com/products/78').then(res => res.json()),
+      fetch('https://dummyjson.com/products/79').then(res => res.json()),
+    ]);
+
+    setProducts([acessorie, phone, laptop1,laptop2]);
+  }
+
+  loadProducts();
+}, []);
 
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">    
@@ -34,7 +50,6 @@ function RouteComponent() {
             </span>
           </Link>
         </div>
-
         
 
         <div className="flex gap-4 items-center">
@@ -62,14 +77,54 @@ function RouteComponent() {
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-12">
           <h2 className="text-4xl font-extrabold tracking-tighter uppercase">Destaques</h2>
-          <Link to="/shop" className="text-sm font-bold uppercase hover:underline underline-offset-4">
+          <Link to="/login" className="text-sm font-bold uppercase hover:underline underline-offset-4">
             Ver tudo &rarr;
           </Link>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+             {products.map((product) => (
+               <Card key={product.id} className="overflow-hidden">
+                <div className="aspect-square relative overflow-hidden">
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <CardHeader className="p-4">
+                  <CardTitle className="text-sm line-clamp-1">
+                    {product.title}
+                  </CardTitle>
+                  <CardDescription className="line-clamp-2 text-xs">
+                    {product.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-4 pt-0">
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold">${product.price}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {product.stock} in stock
+                    </span>
+                  </div>
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    <span className="text-xs bg-secondary px-2 py-1 rounded">
+                      {product.category}
+                    </span>
+                    <span className="text-xs bg-secondary px-2 py-1 rounded">
+                      {product.brand}
+                    </span>
+                  </div>
+                </CardContent>
+                <CardFooter className="p-4 pt-0">
+                  <Button variant="outline" className="w-full" size="sm">
+                    View Details
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
           
-        </div>
+        
       </section>           
       
       <footer className="bg-black text-white py-12 px-6 text-center flex flex-col items-center">
