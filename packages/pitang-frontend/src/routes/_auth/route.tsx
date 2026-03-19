@@ -1,17 +1,23 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 import logo from '../../assets/pitang-black.jpg';
+import { Navigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth")({
   component: RouteComponent,
 });
 
+
+
 function RouteComponent() {
+
+  const navigate = useNavigate();
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <a href="http://localhost:5173/" className="flex items-center gap-2 font-medium">
+          <a onClick={() => navigate({to: "/"})} className="cursor-pointer flex items-center gap-2 font-medium">
             <img src={logo} className="w-12 h-12" alt="Pitang Logo" />
             Pitang Commerce
           </a>
