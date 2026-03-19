@@ -3,11 +3,7 @@ import { useAuth, isAuthenticated } from "@/hooks/use-auth";
 
 export const Route = createFileRoute('/dashboard/')({
   beforeLoad: async () => {
-    if (isAuthenticated()) {
-      throw redirect({
-        to: '/dashboard',
-      })
-    }else{
+    if (!isAuthenticated()) {
       throw redirect({
         to: '/login',
       })
