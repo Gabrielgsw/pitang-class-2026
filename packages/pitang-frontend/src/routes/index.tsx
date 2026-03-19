@@ -116,7 +116,7 @@ function RouteComponent() {
                   </div>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
-                  <Button variant="outline" className="w-full" size="sm">
+                  <Button onClick={() => navigate({to: '/login'})} variant="outline" className="w-full cursor-pointer" size="sm">
                     View Details
                   </Button>
                 </CardFooter>
